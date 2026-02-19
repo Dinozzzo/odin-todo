@@ -163,10 +163,13 @@ h3 {
 }
 
 /* TASKS  */
+
 .tasks-side-bar {
   border-bottom: 4px solid #d1d1d1;
   display: flex;
   gap: 40px;
+  margin-bottom: 16px;
+  justify-content: space-between;
 }
 
 .tasks-side-bar button {
@@ -178,7 +181,6 @@ h3 {
   cursor: pointer;
   position: relative;
   padding: 10px 0;
-
   transition:
     color 180ms ease,
     font-weight 180ms ease;
@@ -202,5 +204,18 @@ h3 {
 }
 
 .tasks-side-bar button:focus::after {
-  transform: scaleX(1.2);
+  transform: scaleX(1);
+}
+
+.left-sidebar {
+  display: flex;
+  gap: 40px;
+}
+
+.addtask-btn {
+  background-color: var(--darkgrey);
+  height: 40px;
+  width: 180px;
+  border-radius: 15px;
+  border: 1px solid var(--black);
 }

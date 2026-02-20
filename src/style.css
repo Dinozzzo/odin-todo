@@ -45,6 +45,7 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding-left: 20px;
 }
 
 h1 {
@@ -109,9 +110,9 @@ nav {
   gap: 30px;
 }
 
-hr {
-  width: 80%;
-  margin-left: 25px;
+nav hr {
+  width: 75%;
+  margin-left: 10px;
 }
 
 svg {
@@ -172,7 +173,7 @@ h3 {
   justify-content: space-between;
 }
 
-.tasks-side-bar button {
+.tasks-sidebar-button {
   color: #8c8c8c;
   background-color: var(--darkgrey);
   border: none;
@@ -186,12 +187,17 @@ h3 {
     font-weight 180ms ease;
 }
 
-.tasks-side-bar button:focus {
+/* 6 buttons of sidebar */
+.tasks-sidebar-button:hover {
+  color: #aeaeae;
+}
+
+.tasks-sidebar-button:focus {
   color: var(--orange);
   outline: none;
 }
 
-.tasks-side-bar button::after {
+.tasks-sidebar-button::after {
   content: "";
   position: absolute;
   left: 0;
@@ -203,7 +209,7 @@ h3 {
   transition: transform 280ms ease-in-out;
 }
 
-.tasks-side-bar button:focus::after {
+.tasks-sidebar-button:focus::after {
   transform: scaleX(1);
 }
 
@@ -213,9 +219,159 @@ h3 {
 }
 
 .addtask-btn {
+  color: #8c8c8c;
   background-color: var(--darkgrey);
-  height: 40px;
-  width: 180px;
-  border-radius: 15px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  padding: 10px 0;
+  transition:
+    color 180ms ease,
+    font-weight 180ms ease;
+}
+
+.addtask-btn:hover {
+  color: var(--orange);
+}
+
+.dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tasks-dialog {
+  width: 900px;
+  height: 630px;
+  background-color: var(--darkgrey);
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  padding: 24px;
+  outline: none;
+}
+
+.dialog-title {
+  font-family: Grotesk;
+  font-size: 26px;
+  padding: 20px;
+  text-transform: uppercase;
+}
+
+/* FORM IN DIALOG */
+
+.form-container {
+  padding: 40px;
+}
+
+.tasks-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 45px;
+}
+
+.top-form {
+  display: flex;
+  gap: 200px;
+}
+
+.left-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.right-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.bottom-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.tasks-form-div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tasks-form-input {
+  background-color: var(--grey);
   border: 1px solid var(--black);
+  border-radius: 8px;
+  height: 40px;
+  width: 250px;
+  padding: 10px;
+}
+
+.tasks-form-select {
+  background-color: var(--grey);
+  border: 1px solid var(--black);
+  border-radius: 8px;
+  height: 40px;
+  width: 250px;
+  padding-left: 10px;
+}
+
+.tasks-form-input:focus,
+.tasks-form-select:focus {
+  outline: none;
+  border: 2px solid var(--orange);
+}
+
+.descrip-input {
+  background-color: var(--grey);
+  border: 1px solid var(--black);
+  border-radius: 10px;
+  height: 100px;
+  display: block;
+}
+
+.footer-form {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+}
+
+.cancelform-btn,
+.validform-btn {
+  height: 40px;
+  width: 175px;
+  border-radius: 8px;
+  border: 1.5px solid var(--black);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelform-btn {
+  background-color: rgb(249, 138, 138);
+}
+
+.cancelform-btn:hover {
+  background-color: rgb(251, 120, 120);
+}
+
+.cancelform-btn:active {
+  background-color: rgb(248, 96, 96);
+}
+
+.validform-btn {
+  background-color: rgb(145, 246, 145);
+}
+
+.validform-btn:hover {
+  background-color: rgb(111, 223, 111);
+}
+
+.validform-btn:active {
+  background-color: rgb(80, 189, 80);
 }

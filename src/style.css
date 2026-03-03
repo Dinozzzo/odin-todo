@@ -323,7 +323,8 @@ h3 {
 }
 
 .tasks-form-input:focus,
-.tasks-form-select:focus {
+.tasks-form-select:focus,
+.descrip-input {
   outline: none;
   border: 2px solid var(--orange);
 }
@@ -333,7 +334,7 @@ h3 {
   border: 1px solid var(--black);
   border-radius: 10px;
   height: 100px;
-  display: block;
+  padding: 10px;
 }
 
 .footer-form {
@@ -347,31 +348,31 @@ h3 {
   height: 40px;
   width: 175px;
   border-radius: 8px;
-  border: 1.5px solid var(--black);
+  border: 2px solid var(--black);
   font-weight: 700;
   cursor: pointer;
 }
 
 .cancelform-btn {
-  background-color: rgb(249, 138, 138);
+  background-color: #aeadad;
 }
 
 .cancelform-btn:hover {
-  background-color: rgb(251, 120, 120);
+  background-color: #8b8b8b;
 }
 
 .cancelform-btn:active {
-  background-color: rgb(248, 96, 96);
+  background-color: #737373;
 }
 
 .validform-btn {
-  background-color: rgb(145, 246, 145);
+  background-color: var(--grey);
 }
 
 .validform-btn:hover {
-  background-color: rgb(111, 223, 111);
+  background-color: #f5f4f4;
 }
 
 .validform-btn:active {
-  background-color: rgb(80, 189, 80);
+  background-color: #ffffff;
 }

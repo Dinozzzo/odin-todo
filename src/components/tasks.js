@@ -90,6 +90,14 @@ export default function tasks() {
 
   const isProjectSel = document.createElement("select");
   isProjectSel.classList.add("tasks-form-select");
+
+  const projects = ["Work", "Sport", "Studies", "Others"];
+  projects.forEach((project) => {
+    const option = document.createElement("option");
+    option.value = project.toLowerCase();
+    option.textContent = project;
+    isProjectSel.append(option);
+  });
   // HERE WE WILL NEED TO CONENCT WITH EXISTING PROJECTS !! //
 
   // FORM RIGHT SIDE
@@ -158,10 +166,42 @@ export default function tasks() {
   const validFormBtn = document.createElement("button");
   validFormBtn.textContent = "Create";
   validFormBtn.classList.add("validform-btn");
+  validFormBtn.type = "button";
 
   // DIALOG EVENT
   addTaskBtn.addEventListener("click", () => {
     dialog.showModal();
+  });
+
+  cancelFormBtn.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  // CREATION OF TASK
+  const tasksList = [];
+
+  function taskFactory(title, priority, project, dueDate, description) {
+    return {
+      title: title,
+      priority: priority,
+      project: project,
+      dueDate: dueDate,
+      description: description,
+    };
+  }
+
+  validFormBtn.addEventListener("click", () => {
+    tasksList.push(
+      taskFactory(
+        titleInp.value,
+        prioritySel.value,
+        isProjectSel.value,
+        dueDateInp.value,
+        descripInp.value,
+      ),
+    );
+
+    console.log(tasksList);
   });
 
   // ASSEMBLAGE

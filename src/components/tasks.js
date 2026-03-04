@@ -139,9 +139,8 @@ export default function tasks() {
   descripLab.textContent = "Description";
   descripLab.setAttribute("for", "description");
 
-  const descripInp = document.createElement("input");
+  const descripInp = document.createElement("textarea");
   descripInp.classList.add("descrip-input");
-  descripInp.type = "textarea";
   descripInp.id = "description";
   descripInp.name = "description";
   descripInp.placeholder = "Need to send the mail about..";
@@ -210,7 +209,7 @@ export default function tasks() {
 
   // CREATION OF TASK
 
-  const tasksArray = [];
+  let tasksArray = [];
 
   function taskFactory(title, priority, project, dueDate, description) {
     return {
@@ -222,59 +221,64 @@ export default function tasks() {
     };
   }
 
-  function renderTasks(task) {
-    const newLine = document.createElement("li");
-    newLine.classList.add("tasks-item");
+  function renderTasks() {
+    tasksList.innerHTML = "";
+    tasksList.append(tasksItemH);
 
-    const newLineTitle = document.createElement("div");
-    newLineTitle.id = "new-line-title";
-    newLineTitle.textContent = task.title;
-    newLineTitle.classList.add("list-items");
+    tasksArray.forEach((task) => {
+      const newLine = document.createElement("li");
+      newLine.classList.add("tasks-item");
 
-    const newLinePriority = document.createElement("div");
-    newLinePriority.id = "new-line-priority";
-    newLinePriority.textContent = task.priority;
-    newLinePriority.classList.add("list-items");
+      const newLineTitle = document.createElement("div");
+      newLineTitle.id = "new-line-title";
+      newLineTitle.textContent = task.title;
+      newLineTitle.classList.add("list-items");
 
-    if (newLinePriority.textContent === "low") {
-      newLinePriority.style.backgroundColor = "rgb(80, 206, 1)";
-    } else if (newLinePriority.textContent === "medium") {
-      newLinePriority.style.backgroundColor = "rgb(255, 207, 17)";
-    } else if (newLinePriority.textContent === "high") {
-      newLinePriority.style.backgroundColor = "rgb(255, 88, 88)";
-    }
+      const newLinePriority = document.createElement("div");
+      newLinePriority.id = "new-line-priority";
+      newLinePriority.textContent = task.priority;
+      newLinePriority.classList.add("list-items");
 
-    const newLineProject = document.createElement("div");
-    newLineProject.id = "new-line-project";
-    newLineProject.textContent = task.project;
-    newLineProject.classList.add("list-items");
+      if (newLinePriority.textContent === "low") {
+        newLinePriority.style.backgroundColor = "rgb(80, 206, 1)";
+      } else if (newLinePriority.textContent === "medium") {
+        newLinePriority.style.backgroundColor = "rgb(255, 207, 17)";
+      } else if (newLinePriority.textContent === "high") {
+        newLinePriority.style.backgroundColor = "rgb(255, 88, 88)";
+      }
 
-    const newLineDate = document.createElement("div");
-    newLineDate.id = "new-line-date";
-    newLineDate.textContent = task.dueDate;
-    newLineDate.classList.add("list-items");
+      const newLineProject = document.createElement("div");
+      newLineProject.id = "new-line-project";
+      newLineProject.textContent = task.project;
+      newLineProject.classList.add("list-items");
 
-    const newLineActions = document.createElement("div");
-    newLineActions.id = "new-line-actions";
-    newLineActions.classList.add("list-items");
+      const newLineDate = document.createElement("div");
+      newLineDate.id = "new-line-date";
+      newLineDate.textContent = task.dueDate;
+      newLineDate.classList.add("list-items");
 
-    const editLineBtn = document.createElement("button");
-    editLineBtn.textContent = "Edit";
+      const newLineActions = document.createElement("div");
+      newLineActions.id = "new-line-actions";
+      newLineActions.classList.add("list-items");
 
-    const deleteLineBtn = document.createElement("button");
-    deleteLineBtn.textContent = "Delete";
+      const editLineBtn = document.createElement("button");
+      editLineBtn.textContent = "Edit";
 
-    newLineActions.append(editLineBtn, deleteLineBtn);
+      const deleteLineBtn = document.createElement("button");
+      deleteLineBtn.textContent = "Delete";
 
-    newLine.append(
-      newLineTitle,
-      newLinePriority,
-      newLineProject,
-      newLineDate,
-      newLineActions,
-    );
+      newLineActions.append(editLineBtn, deleteLineBtn);
 
-    tasksList.appendChild(newLine);
+      newLine.append(
+        newLineTitle,
+        newLinePriority,
+        newLineProject,
+        newLineDate,
+        newLineActions,
+      );
+
+      tasksList.appendChild(newLine);
+    });
   }
 
   // SEND THE DISPLAY FOR EACH OBJECT CREATED
@@ -290,7 +294,7 @@ export default function tasks() {
         descripInp.value,
       ),
     );
-    tasksArray.forEach(renderTasks);
+    renderTasks();
     dialog.close();
     form.reset();
   });
@@ -315,7 +319,6 @@ export default function tasks() {
     taskActions,
   );
 
-  tasksList.append(tasksItemH);
   tasksListDiv.append(tasksList);
 
   // form assemblage
@@ -343,5 +346,6 @@ export default function tasks() {
 
   // general assemblage
   container.append(title, sideBar, tasksListDiv, dialogContainer);
+  renderTasks();
   return container;
 }

@@ -329,6 +329,13 @@ h3 {
   border: 2px solid var(--orange);
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: rgb(186, 184, 184);
+  font-style: italic;
+  font-size: 12px;
+}
+
 .descrip-input {
   background-color: var(--grey);
   border: 1px solid var(--black);

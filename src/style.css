@@ -20,7 +20,7 @@
   --white: #f8f9fa;
   --grey: #ededed;
   --darkgrey: #dedddd;
-  --black: #414141;
+  --black: #484848;
   --orange: #ff7f11;
 }
 
@@ -375,4 +375,29 @@ h3 {
 
 .validform-btn:active {
   background-color: #ffffff;
+}
+
+/* DISPLAY OF THE TASKS */
+
+.tasks-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border-bottom: 1px solid var(--black);
+}
+
+.tasks-cell {
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.tasks-display {
+  padding-top: 20px;
+}
+
+.list-items {
+  text-align: center;
 }

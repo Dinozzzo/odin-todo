@@ -32,17 +32,6 @@ export default function tasks() {
   deletedBtn.textContent = "Deleted";
   deletedBtn.classList.add("tasks-sidebar-button");
 
-  // CREATE TASK BUTTON
-  const addTaskBtn = document.createElement("button");
-  addTaskBtn.textContent = "+ Create a new task";
-  addTaskBtn.classList.add("addtask-btn");
-
-  const dialogContainer = document.createElement("div");
-  dialogContainer.classList.add("dialog-container");
-
-  const dialog = document.createElement("dialog");
-  dialog.classList.add("tasks-dialog");
-
   // DIALOG CONTENT
   const dialogTitle = document.createElement("h5");
   dialogTitle.textContent = "My new task";
@@ -77,7 +66,7 @@ export default function tasks() {
   titleInp.type = "text";
   titleInp.id = "title";
   titleInp.name = "title";
-  titleInp.placeholder = "Work..";
+  titleInp.placeholder = "Send mail to my boss..  ";
   titleInp.required = true;
 
   const isProjectDiv = document.createElement("div");
@@ -136,6 +125,7 @@ export default function tasks() {
   dueDateInp.type = "date";
   dueDateInp.id = "duedate";
   dueDateInp.name = "duedate";
+  dueDateInp.value = new Date().toISOString().split("T")[0];
 
   // FORM BOTTOM SIDE
   const botForm = document.createElement("div");
@@ -154,6 +144,7 @@ export default function tasks() {
   descripInp.type = "textarea";
   descripInp.id = "description";
   descripInp.name = "description";
+  descripInp.placeholder = "Need to send the mail about..";
 
   // DIALOG BUTTONS
   const footerForm = document.createElement("div");
@@ -167,6 +158,46 @@ export default function tasks() {
   validFormBtn.textContent = "Create";
   validFormBtn.classList.add("validform-btn");
   validFormBtn.type = "button";
+  // LIST DIV CONTAINER
+  const tasksListDiv = document.createElement("div");
+  tasksListDiv.classList.add("tasks-display");
+
+  const tasksList = document.createElement("ul");
+  tasksList.classList.add("tasks-list");
+
+  const tasksItemH = document.createElement("li");
+  tasksItemH.classList.add("tasks-item");
+
+  const taskTitleH = document.createElement("div");
+  taskTitleH.textContent = "Title";
+  taskTitleH.classList.add("tasks-cell");
+
+  const taskPriorityH = document.createElement("div");
+  taskPriorityH.textContent = "Priority";
+  taskPriorityH.classList.add("tasks-cell");
+
+  const taskProjectH = document.createElement("div");
+  taskProjectH.textContent = "Project";
+  taskProjectH.classList.add("tasks-cell");
+
+  const taskDateH = document.createElement("div");
+  taskDateH.textContent = "Due Date";
+  taskDateH.classList.add("tasks-cell");
+
+  const taskActions = document.createElement("div");
+  taskActions.textContent = "Actions";
+  taskActions.classList.add("tasks-cell");
+
+  // CREATE TASK BUTTON
+  const addTaskBtn = document.createElement("button");
+  addTaskBtn.textContent = "+ Create a new task";
+  addTaskBtn.classList.add("addtask-btn");
+
+  const dialogContainer = document.createElement("div");
+  dialogContainer.classList.add("dialog-container");
+
+  const dialog = document.createElement("dialog");
+  dialog.classList.add("tasks-dialog");
 
   // DIALOG EVENT
   addTaskBtn.addEventListener("click", () => {
@@ -178,7 +209,8 @@ export default function tasks() {
   });
 
   // CREATION OF TASK
-  const tasksList = [];
+
+  const tasksArray = [];
 
   function taskFactory(title, priority, project, dueDate, description) {
     return {
@@ -190,8 +222,50 @@ export default function tasks() {
     };
   }
 
+  function renderTasks(task) {
+    const newLine = document.createElement("li");
+    newLine.classList.add("tasks-item");
+
+    const newLineTitle = document.createElement("div");
+    newLineTitle.id = "new-line-title";
+    newLineTitle.textContent = task.title;
+    newLineTitle.classList.add("list-items");
+
+    const newLinePriority = document.createElement("div");
+    newLinePriority.id = "new-line-priority";
+    newLinePriority.textContent = task.priority;
+    newLinePriority.classList.add("list-items");
+
+    const newLineProject = document.createElement("div");
+    newLineProject.id = "new-line-project";
+    newLineProject.textContent = task.project;
+    newLineProject.classList.add("list-items");
+
+    const newLineDate = document.createElement("div");
+    newLineDate.id = "new-line-date";
+    newLineDate.textContent = task.dueDate;
+    newLineDate.classList.add("list-items");
+
+    const newLineActions = document.createElement("div");
+    newLineActions.id = "new-line-actions";
+    newLineActions.classList.add("list-items");
+
+    newLine.append(
+      newLineTitle,
+      newLinePriority,
+      newLineProject,
+      newLineDate,
+      newLineActions,
+    );
+
+    tasksList.appendChild(newLine);
+  }
+
+  // SEND THE DISPLAY FOR EACH OBJECT CREATED
+
   validFormBtn.addEventListener("click", () => {
-    tasksList.push(
+    // SEND AN OBJECT TO THE ARRAY
+    tasksArray.push(
       taskFactory(
         titleInp.value,
         prioritySel.value,
@@ -200,8 +274,9 @@ export default function tasks() {
         descripInp.value,
       ),
     );
-
-    console.log(tasksList);
+    // DISPLAY THE TASKS
+    tasksArray.forEach(renderTasks);
+    dialog.close();
   });
 
   // ASSEMBLAGE
@@ -215,6 +290,17 @@ export default function tasks() {
   );
 
   sideBar.append(leftSidebar, addTaskBtn);
+
+  tasksItemH.append(
+    taskTitleH,
+    taskPriorityH,
+    taskProjectH,
+    taskDateH,
+    taskActions,
+  );
+
+  tasksList.append(tasksItemH);
+  tasksListDiv.append(tasksList);
 
   // form assemblage
   titleDiv.append(titleLab, titleInp);
@@ -240,6 +326,6 @@ export default function tasks() {
   dialogContainer.append(dialog);
 
   // general assemblage
-  container.append(title, sideBar, dialogContainer);
+  container.append(title, sideBar, tasksListDiv, dialogContainer);
   return container;
 }

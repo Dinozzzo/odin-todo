@@ -381,7 +381,7 @@ h3 {
 
 .tasks-item {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 0.3fr 1fr 1fr 1fr;
   align-items: center;
   gap: 20px;
   padding: 10px;
@@ -400,4 +400,36 @@ h3 {
 
 .list-items {
   text-align: center;
+}
+
+#new-line-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+#new-line-actions button {
+  color: var(--black);
+  background-color: var(--darkgrey);
+  border: 2px solid var(--black);
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#new-line-actions :first-child:hover {
+  background-color: rgb(253, 172, 58);
+}
+
+#new-line-actions :last-child:hover {
+  background-color: rgb(255, 88, 88);
+}
+#new-line-actions button:active {
+  background-color: #dedddd82;
+}
+
+#new-line-priority {
+  padding: 5px 10px;
+  border-radius: 20px;
 }

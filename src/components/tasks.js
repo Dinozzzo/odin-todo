@@ -157,7 +157,7 @@ export default function tasks() {
   const validFormBtn = document.createElement("button");
   validFormBtn.textContent = "Create";
   validFormBtn.classList.add("validform-btn");
-  validFormBtn.type = "button";
+  validFormBtn.type = "submit";
   // LIST DIV CONTAINER
   const tasksListDiv = document.createElement("div");
   tasksListDiv.classList.add("tasks-display");
@@ -236,6 +236,14 @@ export default function tasks() {
     newLinePriority.textContent = task.priority;
     newLinePriority.classList.add("list-items");
 
+    if (newLinePriority.textContent === "low") {
+      newLinePriority.style.backgroundColor = "rgb(80, 206, 1)";
+    } else if (newLinePriority.textContent === "medium") {
+      newLinePriority.style.backgroundColor = "rgb(255, 207, 17)";
+    } else if (newLinePriority.textContent === "high") {
+      newLinePriority.style.backgroundColor = "rgb(255, 88, 88)";
+    }
+
     const newLineProject = document.createElement("div");
     newLineProject.id = "new-line-project";
     newLineProject.textContent = task.project;
@@ -250,6 +258,14 @@ export default function tasks() {
     newLineActions.id = "new-line-actions";
     newLineActions.classList.add("list-items");
 
+    const editLineBtn = document.createElement("button");
+    editLineBtn.textContent = "Edit";
+
+    const deleteLineBtn = document.createElement("button");
+    deleteLineBtn.textContent = "Delete";
+
+    newLineActions.append(editLineBtn, deleteLineBtn);
+
     newLine.append(
       newLineTitle,
       newLinePriority,
@@ -263,8 +279,8 @@ export default function tasks() {
 
   // SEND THE DISPLAY FOR EACH OBJECT CREATED
 
-  validFormBtn.addEventListener("click", () => {
-    // SEND AN OBJECT TO THE ARRAY
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
     tasksArray.push(
       taskFactory(
         titleInp.value,
@@ -274,9 +290,9 @@ export default function tasks() {
         descripInp.value,
       ),
     );
-    // DISPLAY THE TASKS
     tasksArray.forEach(renderTasks);
     dialog.close();
+    form.reset();
   });
 
   // ASSEMBLAGE

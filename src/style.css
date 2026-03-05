@@ -388,7 +388,7 @@ textarea::placeholder {
 
 .tasks-item {
   display: grid;
-  grid-template-columns: 2fr 0.3fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   align-items: center;
   gap: 20px;
   padding: 10px;
@@ -406,7 +406,9 @@ textarea::placeholder {
 }
 
 .list-items {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #new-line-actions {
@@ -417,7 +419,7 @@ textarea::placeholder {
 #new-line-actions button {
   color: var(--black);
   background-color: var(--darkgrey);
-  border: 2px solid var(--black);
+  border: 1.5px solid var(--black);
   padding: 3px 10px;
   border-radius: 15px;
   font-size: 14px;
@@ -439,4 +441,21 @@ textarea::placeholder {
 #new-line-priority {
   padding: 5px 10px;
   border-radius: 20px;
+}
+
+.priority-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  width: 80px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1.5px solid var(--black);
+}
+
+#full-line:hover {
+  cursor: pointer;
+  background-color: #ccccccb3;
 }

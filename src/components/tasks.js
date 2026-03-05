@@ -228,6 +228,7 @@ export default function tasks() {
     tasksArray.forEach((task) => {
       const newLine = document.createElement("li");
       newLine.classList.add("tasks-item");
+      newLine.id = "full-line";
 
       const newLineTitle = document.createElement("div");
       newLineTitle.id = "new-line-title";
@@ -236,15 +237,20 @@ export default function tasks() {
 
       const newLinePriority = document.createElement("div");
       newLinePriority.id = "new-line-priority";
-      newLinePriority.textContent = task.priority;
       newLinePriority.classList.add("list-items");
 
-      if (newLinePriority.textContent === "low") {
-        newLinePriority.style.backgroundColor = "rgb(80, 206, 1)";
-      } else if (newLinePriority.textContent === "medium") {
-        newLinePriority.style.backgroundColor = "rgb(255, 207, 17)";
-      } else if (newLinePriority.textContent === "high") {
-        newLinePriority.style.backgroundColor = "rgb(255, 88, 88)";
+      const priorityBadge = document.createElement("span");
+      priorityBadge.textContent = task.priority;
+      priorityBadge.classList.add("priority-badge");
+
+      newLinePriority.appendChild(priorityBadge);
+
+      if (priorityBadge.textContent === "low") {
+        priorityBadge.style.backgroundColor = "rgb(80, 206, 1)";
+      } else if (priorityBadge.textContent === "medium") {
+        priorityBadge.style.backgroundColor = "rgb(255, 207, 17)";
+      } else if (priorityBadge.textContent === "high") {
+        priorityBadge.style.backgroundColor = "rgb(255, 88, 88)";
       }
 
       const newLineProject = document.createElement("div");
@@ -297,6 +303,7 @@ export default function tasks() {
     renderTasks();
     dialog.close();
     form.reset();
+    dueDateInp.value = new Date().toISOString().split("T")[0];
   });
 
   // ASSEMBLAGE

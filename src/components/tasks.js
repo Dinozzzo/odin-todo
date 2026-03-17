@@ -1,58 +1,70 @@
 export default function tasks() {
+  // MAIN CONTAINER OF THE PAGE
   const container = document.createElement("div");
   container.classList.add("tasks-container");
 
-  // TITLE + ADD TASKS
+  // PAGE TITLE
   const title = document.createElement("h3");
   title.textContent = "Tasks";
 
-  // SIDEBAR + BUTTONS
+  // SIDEBAR CONTAINER
   const sideBar = document.createElement("div");
   sideBar.classList.add("tasks-side-bar");
 
+  // LEFT PART OF SIDEBAR
   const leftSidebar = document.createElement("div");
   leftSidebar.classList.add("left-sidebar");
 
+  // SIDEBAR FILTER BUTTONS
   const allBtn = document.createElement("button");
   allBtn.textContent = "All";
   allBtn.classList.add("tasks-sidebar-button");
+
   const overdueBtn = document.createElement("button");
   overdueBtn.textContent = "Overdue";
   overdueBtn.classList.add("tasks-sidebar-button");
+
   const todayBtn = document.createElement("button");
   todayBtn.textContent = "Today";
   todayBtn.classList.add("tasks-sidebar-button");
+
   const upcomingBtn = document.createElement("button");
   upcomingBtn.textContent = "Upcoming";
   upcomingBtn.classList.add("tasks-sidebar-button");
+
   const completedBtn = document.createElement("button");
   completedBtn.textContent = "Completed";
   completedBtn.classList.add("tasks-sidebar-button");
+
   const deletedBtn = document.createElement("button");
   deletedBtn.textContent = "Deleted";
   deletedBtn.classList.add("tasks-sidebar-button");
 
-  // DIALOG CONTENT
+  // DIALOG TITLE
   const dialogTitle = document.createElement("h5");
   dialogTitle.textContent = "My new task";
   dialogTitle.classList.add("dialog-title");
 
+  // SEPARATOR LINE
   const hr = document.createElement("hr");
 
+  // FORM CONTAINER INSIDE DIALOG
   const formContainer = document.createElement("div");
   formContainer.classList.add("form-container");
 
-  // FORM
+  // FORM ELEMENT
   const form = document.createElement("form");
   form.classList.add("tasks-form");
 
+  // TOP PART OF THE FORM
   const topForm = document.createElement("div");
   topForm.classList.add("top-form");
 
-  // FORM LEFT SIDE
+  // LEFT SIDE OF FORM
   const leftForm = document.createElement("div");
   leftForm.classList.add("left-form");
 
+  // TITLE INPUT
   const titleDiv = document.createElement("div");
   titleDiv.classList.add("tasks-form-div");
 
@@ -69,6 +81,7 @@ export default function tasks() {
   titleInp.placeholder = "Send mail to my boss..  ";
   titleInp.required = true;
 
+  // PROJECT SELECT
   const isProjectDiv = document.createElement("div");
   isProjectDiv.classList.add("tasks-form-div");
 
@@ -80,6 +93,7 @@ export default function tasks() {
   const isProjectSel = document.createElement("select");
   isProjectSel.classList.add("tasks-form-select");
 
+  // PROJECT OPTIONS
   const projects = ["Work", "Sport", "Studies", "Others"];
   projects.forEach((project) => {
     const option = document.createElement("option");
@@ -87,12 +101,12 @@ export default function tasks() {
     option.textContent = project;
     isProjectSel.append(option);
   });
-  // HERE WE WILL NEED TO CONENCT WITH EXISTING PROJECTS !! //
 
-  // FORM RIGHT SIDE
+  // RIGHT SIDE OF FORM
   const rightForm = document.createElement("div");
   rightForm.classList.add("right-form");
 
+  // PRIORITY SELECT
   const priorityDiv = document.createElement("div");
   priorityDiv.classList.add("tasks-form-div");
 
@@ -112,6 +126,7 @@ export default function tasks() {
     prioritySel.append(option);
   });
 
+  // DUE DATE INPUT
   const dueDateDiv = document.createElement("div");
   dueDateDiv.classList.add("tasks-form-div");
 
@@ -125,12 +140,15 @@ export default function tasks() {
   dueDateInp.type = "date";
   dueDateInp.id = "duedate";
   dueDateInp.name = "duedate";
+
+  // DEFAULT DATE = TODAY
   dueDateInp.value = new Date().toISOString().split("T")[0];
 
-  // FORM BOTTOM SIDE
+  // BOTTOM PART OF FORM
   const botForm = document.createElement("div");
   botForm.classList.add("bottom-form");
 
+  // DESCRIPTION TEXTAREA
   const descripDiv = document.createElement("div");
   descripDiv.classList.add("tasks-form-div");
 
@@ -145,7 +163,7 @@ export default function tasks() {
   descripInp.name = "description";
   descripInp.placeholder = "Need to send the mail about..";
 
-  // DIALOG BUTTONS
+  // FORM FOOTER BUTTONS
   const footerForm = document.createElement("div");
   footerForm.classList.add("footer-form");
 
@@ -157,13 +175,16 @@ export default function tasks() {
   validFormBtn.textContent = "Create";
   validFormBtn.classList.add("validform-btn");
   validFormBtn.type = "submit";
-  // LIST DIV CONTAINER
+
+  // TASK LIST DISPLAY CONTAINER
   const tasksListDiv = document.createElement("div");
   tasksListDiv.classList.add("tasks-display");
 
+  // MAIN LIST
   const tasksList = document.createElement("ul");
   tasksList.classList.add("tasks-list");
 
+  // HEADER LINE
   const tasksItemH = document.createElement("li");
   tasksItemH.classList.add("tasks-item");
 
@@ -187,30 +208,32 @@ export default function tasks() {
   taskActions.textContent = "Actions";
   taskActions.classList.add("tasks-cell");
 
-  // CREATE TASK BUTTON
+  // BUTTON TO CREATE A TASK
   const addTaskBtn = document.createElement("button");
   addTaskBtn.textContent = "+ Create a new task";
   addTaskBtn.classList.add("addtask-btn");
 
+  // DIALOG CONTAINER
   const dialogContainer = document.createElement("div");
   dialogContainer.classList.add("dialog-container");
 
   const dialog = document.createElement("dialog");
   dialog.classList.add("tasks-dialog");
 
-  // DIALOG EVENT
+  // OPEN DIALOG
   addTaskBtn.addEventListener("click", () => {
     dialog.showModal();
   });
 
+  // CLOSE DIALOG
   cancelFormBtn.addEventListener("click", () => {
     dialog.close();
   });
 
-  // CREATION OF TASK
-
+  // TASK STORAGE ARRAY
   let tasksArray = [];
 
+  // FACTORY FUNCTION TO CREATE TASK OBJECTS
   function taskFactory(title, priority, project, dueDate, description) {
     return {
       title: title,
@@ -221,76 +244,114 @@ export default function tasks() {
     };
   }
 
+  // RENDER FUNCTION : DISPLAY TASKS IN THE DOM
+
   function renderTasks() {
     tasksList.innerHTML = "";
     tasksList.append(tasksItemH);
 
-    tasksArray.forEach((task) => {
-      const newLine = document.createElement("li");
-      newLine.classList.add("tasks-item");
-      newLine.id = "full-line";
-
-      const newLineTitle = document.createElement("div");
-      newLineTitle.id = "new-line-title";
-      newLineTitle.textContent = task.title;
-      newLineTitle.classList.add("list-items");
-
-      const newLinePriority = document.createElement("div");
-      newLinePriority.id = "new-line-priority";
-      newLinePriority.classList.add("list-items");
-
-      const priorityBadge = document.createElement("span");
-      priorityBadge.textContent = task.priority;
-      priorityBadge.classList.add("priority-badge");
-
-      newLinePriority.appendChild(priorityBadge);
-
-      if (priorityBadge.textContent === "low") {
-        priorityBadge.style.backgroundColor = "rgb(80, 206, 1)";
-      } else if (priorityBadge.textContent === "medium") {
-        priorityBadge.style.backgroundColor = "rgb(255, 207, 17)";
-      } else if (priorityBadge.textContent === "high") {
-        priorityBadge.style.backgroundColor = "rgb(255, 88, 88)";
-      }
-
-      const newLineProject = document.createElement("div");
-      newLineProject.id = "new-line-project";
-      newLineProject.textContent = task.project;
-      newLineProject.classList.add("list-items");
-
-      const newLineDate = document.createElement("div");
-      newLineDate.id = "new-line-date";
-      newLineDate.textContent = task.dueDate;
-      newLineDate.classList.add("list-items");
-
-      const newLineActions = document.createElement("div");
-      newLineActions.id = "new-line-actions";
-      newLineActions.classList.add("list-items");
-
-      const editLineBtn = document.createElement("button");
-      editLineBtn.textContent = "Edit";
-
-      const deleteLineBtn = document.createElement("button");
-      deleteLineBtn.textContent = "Delete";
-
-      newLineActions.append(editLineBtn, deleteLineBtn);
-
-      newLine.append(
-        newLineTitle,
-        newLinePriority,
-        newLineProject,
-        newLineDate,
-        newLineActions,
-      );
-
-      tasksList.appendChild(newLine);
+    tasksArray.forEach((task, index) => {
+      const taskLine = createTaskLine(task, index);
+      tasksList.append(taskLine);
     });
   }
 
-  // SEND THE DISPLAY FOR EACH OBJECT CREATED
+  function createTaskLine(task, index) {
+    const newLine = document.createElement("li");
+    newLine.classList.add("tasks-item");
+    newLine.id = "full-line";
 
+    const newLineTitle = document.createElement("div");
+    newLineTitle.id = "new-line-title";
+    newLineTitle.textContent = task.title;
+    newLineTitle.classList.add("list-items");
+
+    const newLinePriority = document.createElement("div");
+    newLinePriority.id = "new-line-priority";
+    newLinePriority.classList.add("list-items");
+
+    const priorityBadge = document.createElement("span");
+    priorityBadge.textContent = task.priority;
+    priorityBadge.classList.add("priority-badge");
+
+    newLinePriority.appendChild(priorityBadge);
+
+    if (priorityBadge.textContent === "low") {
+      priorityBadge.style.backgroundColor = "rgb(80, 206, 1)";
+    } else if (priorityBadge.textContent === "medium") {
+      priorityBadge.style.backgroundColor = "rgb(255, 207, 17)";
+    } else if (priorityBadge.textContent === "high") {
+      priorityBadge.style.backgroundColor = "rgb(255, 88, 88)";
+    }
+
+    const newLineProject = document.createElement("div");
+    newLineProject.id = "new-line-project";
+    newLineProject.textContent = task.project;
+    newLineProject.classList.add("list-items");
+
+    const newLineDate = document.createElement("div");
+    newLineDate.id = "new-line-date";
+    newLineDate.textContent = task.dueDate;
+    newLineDate.classList.add("list-items");
+
+    const newLineActions = document.createElement("div");
+    newLineActions.id = "new-line-actions";
+    newLineActions.classList.add("list-items");
+
+    const editLineBtn = document.createElement("button");
+    editLineBtn.textContent = "Edit";
+    editLineBtn.addEventListener("click", () => {
+      titleInp.value = task.title;
+      prioritySel.value = task.priority;
+      isProjectSel.value = task.project;
+      dueDateInp.value = task.dueDate;
+      descripInp.value = task.description;
+      dialog.showModal();
+      validFormBtn.textContent = "Edit";
+      tasksArray.splice(index, 1);
+      renderTasks();
+    });
+
+    const deleteLineBtn = document.createElement("button");
+    deleteLineBtn.textContent = "Delete";
+    deleteLineBtn.addEventListener("click", () => {
+      tasksArray.splice(index, 1);
+      renderTasks();
+    });
+
+    newLineActions.append(editLineBtn, deleteLineBtn);
+
+    newLine.append(
+      newLineTitle,
+      newLinePriority,
+      newLineProject,
+      newLineDate,
+      newLineActions,
+    );
+
+    tasksList.append(newLine);
+
+    newLine.addEventListener("click", () => {
+      const existing = newLine.nextElementSibling;
+
+      if (existing && existing.classList.contains("descrip-line")) {
+        existing.remove();
+      } else {
+        const descripLine = document.createElement("li");
+        descripLine.classList.add("descrip-line");
+        descripLine.textContent = task.description;
+
+        newLine.after(descripLine);
+      }
+    });
+
+    return newLine;
+  }
+
+  // FORM SUBMIT : CREATE TASK
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+
     tasksArray.push(
       taskFactory(
         titleInp.value,
@@ -300,13 +361,17 @@ export default function tasks() {
         descripInp.value,
       ),
     );
+
     renderTasks();
+
     dialog.close();
     form.reset();
+
+    // RESET DATE TO TODAY
     dueDateInp.value = new Date().toISOString().split("T")[0];
   });
 
-  // ASSEMBLAGE
+  // SIDEBAR ASSEMBLY
   leftSidebar.append(
     allBtn,
     overdueBtn,
@@ -318,6 +383,7 @@ export default function tasks() {
 
   sideBar.append(leftSidebar, addTaskBtn);
 
+  // HEADER ASSEMBLY
   tasksItemH.append(
     taskTitleH,
     taskPriorityH,
@@ -328,7 +394,7 @@ export default function tasks() {
 
   tasksListDiv.append(tasksList);
 
-  // form assemblage
+  // FORM STRUCTURE
   titleDiv.append(titleLab, titleInp);
   isProjectDiv.append(isProjectLab, isProjectSel);
   leftForm.append(titleDiv, isProjectDiv);
@@ -347,12 +413,15 @@ export default function tasks() {
   form.append(topForm, botForm, footerForm);
   formContainer.append(form);
 
-  // dialog assembllage
+  // DIALOG ASSEMBLY
   dialog.append(dialogTitle, hr, formContainer);
   dialogContainer.append(dialog);
 
-  // general assemblage
+  // FINAL PAGE ASSEMBLY
   container.append(title, sideBar, tasksListDiv, dialogContainer);
+
+  // INITIAL RENDER
   renderTasks();
+
   return container;
 }

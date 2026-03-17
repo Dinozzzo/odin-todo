@@ -459,3 +459,10 @@ textarea::placeholder {
   cursor: pointer;
   background-color: #ccccccb3;
 }
+
+.descrip-line {
+  border-bottom: 1px solid var(--black);
+  list-style: none;
+  padding: 20px 40px;
+  background-color: #e2e2e2;
+}

@@ -23,7 +23,6 @@ export default function tasks() {
   const overdueBtn = document.createElement("button");
   overdueBtn.textContent = "Overdue";
   overdueBtn.classList.add("tasks-sidebar-button");
-
   const todayBtn = document.createElement("button");
   todayBtn.textContent = "Today";
   todayBtn.classList.add("tasks-sidebar-button");
@@ -167,15 +166,6 @@ export default function tasks() {
   const footerForm = document.createElement("div");
   footerForm.classList.add("footer-form");
 
-  const cancelFormBtn = document.createElement("button");
-  cancelFormBtn.textContent = "Cancel";
-  cancelFormBtn.classList.add("cancelform-btn");
-
-  const validFormBtn = document.createElement("button");
-  validFormBtn.textContent = "Create";
-  validFormBtn.classList.add("validform-btn");
-  validFormBtn.type = "submit";
-
   // TASK LIST DISPLAY CONTAINER
   const tasksListDiv = document.createElement("div");
   tasksListDiv.classList.add("tasks-display");
@@ -220,16 +210,6 @@ export default function tasks() {
   const dialog = document.createElement("dialog");
   dialog.classList.add("tasks-dialog");
 
-  // OPEN DIALOG
-  addTaskBtn.addEventListener("click", () => {
-    dialog.showModal();
-  });
-
-  // CLOSE DIALOG
-  cancelFormBtn.addEventListener("click", () => {
-    dialog.close();
-  });
-
   // TASK STORAGE ARRAY
   let tasksArray = [];
 
@@ -255,6 +235,9 @@ export default function tasks() {
       tasksList.append(taskLine);
     });
   }
+
+  let isEditing = false;
+  let editingIndex = null;
 
   function createTaskLine(task, index) {
     const newLine = document.createElement("li");
@@ -298,20 +281,7 @@ export default function tasks() {
     newLineActions.id = "new-line-actions";
     newLineActions.classList.add("list-items");
 
-    const editLineBtn = document.createElement("button");
-    editLineBtn.textContent = "Edit";
-    editLineBtn.addEventListener("click", () => {
-      titleInp.value = task.title;
-      prioritySel.value = task.priority;
-      isProjectSel.value = task.project;
-      dueDateInp.value = task.dueDate;
-      descripInp.value = task.description;
-      dialog.showModal();
-      validFormBtn.textContent = "Edit";
-      tasksArray.splice(index, 1);
-      renderTasks();
-    });
-
+    // DELETE TASK
     const deleteLineBtn = document.createElement("button");
     deleteLineBtn.textContent = "Delete";
     deleteLineBtn.addEventListener("click", () => {
@@ -319,6 +289,25 @@ export default function tasks() {
       renderTasks();
     });
 
+    // EDIT THE DIALOG
+    const editLineBtn = document.createElement("button");
+    editLineBtn.textContent = "Edit";
+    editLineBtn.addEventListener("click", () => {
+      // edit mode on
+      isEditing = true;
+      editingIndex = index;
+      validFormBtn.textContent = "Edit";
+      // keep the original values
+      titleInp.value = task.title;
+      prioritySel.value = task.priority;
+      isProjectSel.value = task.project;
+      dueDateInp.value = task.dueDate;
+      descripInp.value = task.description;
+      // open the dialog
+      dialog.showModal();
+    });
+
+    // ASSEMBLAGE OF TASK
     newLineActions.append(editLineBtn, deleteLineBtn);
 
     newLine.append(
@@ -331,6 +320,7 @@ export default function tasks() {
 
     tasksList.append(newLine);
 
+    // SHOW DESCRIPTION WHEN TASK IS CLICKED ON
     newLine.addEventListener("click", () => {
       const existing = newLine.nextElementSibling;
 
@@ -348,25 +338,57 @@ export default function tasks() {
     return newLine;
   }
 
+  // CREATE NEW TAKS
+  addTaskBtn.addEventListener("click", () => {
+    dialog.showModal();
+    isEditing = false;
+    editingIndex = null;
+    validFormBtn.textContent = "Create";
+  });
+
+  // CLOSE DIALOG
+  const cancelFormBtn = document.createElement("button");
+  cancelFormBtn.type = "button";
+  cancelFormBtn.textContent = "Cancel";
+  cancelFormBtn.classList.add("cancelform-btn");
+  cancelFormBtn.addEventListener("click", () => {
+    dialog.close();
+    form.reset();
+  });
+
+  // VALID FORM
+  const validFormBtn = document.createElement("button");
+  validFormBtn.textContent = "Create";
+  validFormBtn.classList.add("validform-btn");
+  validFormBtn.type = "submit";
+
   // FORM SUBMIT : CREATE TASK
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    tasksArray.push(
-      taskFactory(
-        titleInp.value,
-        prioritySel.value,
-        isProjectSel.value,
-        dueDateInp.value,
-        descripInp.value,
-      ),
-    );
-
+    if (isEditing === true) {
+      // edit existing task
+      tasksArray[editingIndex] = {
+        title: titleInp.value,
+        priority: prioritySel.value,
+        project: isProjectSel.value,
+        dueDate: dueDateInp.value,
+        description: descripInp.value,
+      };
+    } else {
+      // create new task
+      tasksArray.push({
+        title: titleInp.value,
+        priority: prioritySel.value,
+        project: isProjectSel.value,
+        dueDate: dueDateInp.value,
+        description: descripInp.value,
+      });
+    }
     renderTasks();
-
     dialog.close();
     form.reset();
-
+    isEditing = false;
+    editingIndex = null;
     // RESET DATE TO TODAY
     dueDateInp.value = new Date().toISOString().split("T")[0];
   });

@@ -4,6 +4,7 @@ const content = document.querySelector(".content");
 
 import home from "./components/home.js";
 import tasks from "./components/tasks.js";
+import projects from "./components/projects.js";
 
 function render(pageFn) {
   content.textContent = "";
@@ -20,4 +21,9 @@ dashboardBtn.addEventListener("click", () => {
 const tasksBtn = document.querySelector("#tasks-btn");
 tasksBtn.addEventListener("click", () => {
   render(tasks);
+});
+
+const projectsBtn = document.querySelector("#projects-btn");
+projectsBtn.addEventListener("click", () => {
+  render(projects);
 });

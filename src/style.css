@@ -163,7 +163,7 @@ h3 {
   padding-bottom: 16px;
 }
 
-/* TASKS  */
+/* TASKS PAGE */
 
 .tasks-side-bar {
   border-bottom: 4px solid #d1d1d1;
@@ -465,4 +465,10 @@ textarea::placeholder {
   list-style: none;
   padding: 20px 40px;
   background-color: #e2e2e2;
+}
+
+/* PROJECTS PAGE */
+
+#projects-container {
+  background-color: black;
 }

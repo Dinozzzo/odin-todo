@@ -1,5 +1,7 @@
 import { tasksArray } from "./data.js";
 
+import { projectsList } from "./data.js";
+
 export default function tasks() {
   // MAIN CONTAINER OF THE PAGE
   const container = document.createElement("div");
@@ -94,14 +96,17 @@ export default function tasks() {
   const isProjectSel = document.createElement("select");
   isProjectSel.classList.add("tasks-form-select");
 
-  // PROJECT OPTIONS
-  const projects = ["Work", "Sport", "Studies", "Others"];
-  projects.forEach((project) => {
+  projectsList.forEach((project) => {
     const option = document.createElement("option");
     option.value = project.toLowerCase();
     option.textContent = project;
     isProjectSel.append(option);
   });
+
+  // ADD NEW PROJECT
+  const addProjectBtn = document.createElement("button");
+  addProjectBtn.textContent = "+ Add new project";
+  addProjectBtn.classList.add("add-project-btn");
 
   // RIGHT SIDE OF FORM
   const rightForm = document.createElement("div");
@@ -405,7 +410,7 @@ export default function tasks() {
 
   // FORM STRUCTURE
   titleDiv.append(titleLab, titleInp);
-  isProjectDiv.append(isProjectLab, isProjectSel);
+  isProjectDiv.append(isProjectLab, isProjectSel, addProjectBtn);
   leftForm.append(titleDiv, isProjectDiv);
 
   priorityDiv.append(priorityLab, prioritySel);

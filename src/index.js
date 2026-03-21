@@ -2,7 +2,6 @@ import "./style.css";
 
 const content = document.querySelector(".content");
 
-import home from "./components/home.js";
 import tasks from "./components/tasks.js";
 import projects from "./components/projects.js";
 
@@ -11,12 +10,7 @@ function render(pageFn) {
   content.append(pageFn());
 }
 
-render(home);
-
-const dashboardBtn = document.querySelector("#dashboard-btn");
-dashboardBtn.addEventListener("click", () => {
-  render(home);
-});
+render(projects);
 
 const tasksBtn = document.querySelector("#tasks-btn");
 tasksBtn.addEventListener("click", () => {

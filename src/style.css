@@ -336,6 +336,12 @@ textarea::placeholder {
   font-size: 12px;
 }
 
+.add-project-btn {
+  border: 1px solid var(--black);
+  padding: 3px;
+  border-radius: 6px;
+}
+
 .descrip-input {
   background-color: var(--grey);
   border: 1px solid var(--black);
@@ -469,15 +475,41 @@ textarea::placeholder {
 
 /* PROJECTS PAGE */
 
-#projects-container {
-  background-color: black;
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 100%;
+  margin: 10px;
+  gap: 10px;
+  border-radius: 25px;
+}
+
+.project-card {
+  border: 1.5px solid var(--black);
+  border-radius: 25px;
   display: flex;
   flex-direction: column;
 }
 
-.projects-grid {
-  background-color: grey;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+.card-title {
+  font-family: Grotesk;
+  margin: 20px 10px 10px 20px;
+  font-size: 22px;
+}
+
+.card-element {
+  list-style: none;
+  padding: 12px 0;
+  font-size: 14px;
+}
+
+.list-hr {
+  width: 85%;
 }

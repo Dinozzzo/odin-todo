@@ -1,3 +1,4 @@
+// TASKS LIST
 export const tasksArray = [
   {
     title: "Go to the gym",
@@ -21,3 +22,6 @@ export const tasksArray = [
     description: "Review modules and webpack",
   },
 ];
+
+// PROJECT OPTIONS
+export const projectsList = ["Work", "Sport", "Studies", "Others"];

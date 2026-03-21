@@ -218,11 +218,11 @@ export default function tasks() {
   dialog.classList.add("tasks-dialog");
 
   // RENDER FUNCTION : DISPLAY TASKS IN THE DOM
-  function renderTasks() {
+  function renderTasks(tasks = tasksArray) {
     tasksList.innerHTML = "";
     tasksList.append(tasksItemH);
 
-    tasksArray.forEach((task, index) => {
+    tasks.forEach((task, index) => {
       const taskLine = createTaskLine(task, index);
       tasksList.append(taskLine);
     });
@@ -349,6 +349,8 @@ export default function tasks() {
   });
 
   // VALID FORM
+  const currentDate = new Date().toISOString().split("T")[0];
+
   const validFormBtn = document.createElement("button");
   validFormBtn.textContent = "Create";
   validFormBtn.classList.add("validform-btn");
@@ -382,7 +384,19 @@ export default function tasks() {
     isEditing = false;
     editingIndex = null;
     // RESET DATE TO TODAY
-    dueDateInp.value = new Date().toISOString().split("T")[0];
+    dueDateInp.value = currentDate;
+  });
+
+  // FILTER THE TASKS
+
+  // overdue filter
+  function overdueFilter(task) {
+    return task.dueDate < currentDate;
+  }
+
+  overdueBtn.addEventListener("click", () => {
+    const overdue = tasksArray.filter(overdueFilter);
+    renderTasks(overdue);
   });
 
   // SIDEBAR ASSEMBLY

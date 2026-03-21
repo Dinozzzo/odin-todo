@@ -44,7 +44,6 @@ export default function projects() {
       elementHr.classList.add("list-hr");
       taskDisplay.append(displayElement, elementHr);
     });
-    console.log(projectsList);
   }
 
   // CREATE CARD FOR EACH PROJECT

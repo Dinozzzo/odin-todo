@@ -39,10 +39,6 @@ export default function tasks() {
   completedBtn.textContent = "Completed";
   completedBtn.classList.add("tasks-sidebar-button");
 
-  const deletedBtn = document.createElement("button");
-  deletedBtn.textContent = "Deleted";
-  deletedBtn.classList.add("tasks-sidebar-button");
-
   // DIALOG TITLE
   const dialogTitle = document.createElement("h5");
   dialogTitle.textContent = "My new task";
@@ -230,6 +226,7 @@ export default function tasks() {
 
   let isEditing = false;
   let editingIndex = null;
+  const completedTasks = [];
 
   function createTaskLine(task, index) {
     const newLine = document.createElement("li");
@@ -273,6 +270,39 @@ export default function tasks() {
     newLineActions.id = "new-line-actions";
     newLineActions.classList.add("list-items");
 
+    if (task.isCompleted) {
+      newLineTitle.style.textDecoration = "line-through";
+      newLineProject.style.textDecoration = "line-through";
+      newLineDate.style.textDecoration = "line-through";
+      newLine.style.opacity = "0.5";
+    }
+    // COMPLETE TASK
+
+    const completeLineBtn = document.createElement("button");
+    completeLineBtn.textContent = "Complete";
+
+    if (task.isCompleted) {
+      completeLineBtn.textContent = "Undo";
+    } else {
+      completeLineBtn.textContent = "Complete";
+    }
+
+    completeLineBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+
+      task.isCompleted = !task.isCompleted;
+
+      renderTasks();
+    });
+
+    // completed filter
+    completedBtn.addEventListener("click", () => {
+      const completedTasks = tasksArray.filter(
+        (task) => task.isCompleted === true,
+      );
+      renderTasks(completedTasks);
+    });
+
     // DELETE TASK
     const deleteLineBtn = document.createElement("button");
     deleteLineBtn.textContent = "Delete";
@@ -300,7 +330,7 @@ export default function tasks() {
     });
 
     // ASSEMBLAGE OF TASK
-    newLineActions.append(editLineBtn, deleteLineBtn);
+    newLineActions.append(completeLineBtn, editLineBtn, deleteLineBtn);
 
     newLine.append(
       newLineTitle,
@@ -376,6 +406,7 @@ export default function tasks() {
         project: isProjectSel.value,
         dueDate: dueDateInp.value,
         description: descripInp.value,
+        isCompleted: false,
       });
     }
     renderTasks();
@@ -389,6 +420,11 @@ export default function tasks() {
 
   // FILTER THE TASKS
 
+  // all filter
+  allBtn.addEventListener("click", () => {
+    renderTasks(tasksArray);
+  });
+
   // overdue filter
   function overdueFilter(task) {
     return task.dueDate < currentDate;
@@ -399,15 +435,28 @@ export default function tasks() {
     renderTasks(overdue);
   });
 
+  // today filter
+  function todayFilter(task) {
+    return task.dueDate === currentDate;
+  }
+
+  todayBtn.addEventListener("click", () => {
+    const today = tasksArray.filter(todayFilter);
+    renderTasks(today);
+  });
+
+  // upcoming filter
+  function upcomingFilter(task) {
+    return task.dueDate > currentDate;
+  }
+
+  upcomingBtn.addEventListener("click", () => {
+    const upcoming = tasksArray.filter(upcomingFilter);
+    renderTasks(upcoming);
+  });
+
   // SIDEBAR ASSEMBLY
-  leftSidebar.append(
-    allBtn,
-    overdueBtn,
-    todayBtn,
-    upcomingBtn,
-    completedBtn,
-    deletedBtn,
-  );
+  leftSidebar.append(allBtn, overdueBtn, todayBtn, upcomingBtn, completedBtn);
 
   sideBar.append(leftSidebar, addTaskBtn);
 

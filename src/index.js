@@ -1,9 +1,12 @@
 import "./style.css";
 
-const content = document.querySelector(".content");
-
+import { loadTasks } from "./components/data.js";
 import tasks from "./components/tasks.js";
 import projects from "./components/projects.js";
+
+loadTasks();
+
+const content = document.querySelector(".content");
 
 function render(pageFn) {
   content.textContent = "";

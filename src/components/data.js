@@ -25,3 +25,18 @@ export const tasksArray = [
 
 // PROJECT OPTIONS
 export const projectsList = ["Work", "Sport", "Studies", "Others"];
+
+// LOCALSTORAGE
+
+export function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasksArray));
+}
+
+export function loadTasks() {
+  const data = localStorage.getItem("tasks");
+  if (!data) return;
+
+  const parsedData = JSON.parse(data);
+  tasksArray.length = 0;
+  tasksArray.push(...parsedData);
+}

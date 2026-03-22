@@ -1,5 +1,4 @@
-import { tasksArray } from "./data.js";
-
+import { saveTasks, tasksArray } from "./data.js";
 import { projectsList } from "./data.js";
 
 export default function tasks() {
@@ -308,6 +307,7 @@ export default function tasks() {
     deleteLineBtn.textContent = "Delete";
     deleteLineBtn.addEventListener("click", () => {
       tasksArray.splice(index, 1);
+      saveTasks();
       renderTasks();
     });
 
@@ -409,6 +409,7 @@ export default function tasks() {
         isCompleted: false,
       });
     }
+    saveTasks();
     renderTasks();
     dialog.close();
     form.reset();
